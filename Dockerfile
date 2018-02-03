@@ -1,7 +1,4 @@
 FROM ubuntu:16.04
-VOLUME /data
-WORKDIR /data
-COPY . /data
 RUN apt-get update && \
         apt-get install -y \
         unzip \
@@ -12,10 +9,30 @@ RUN apt-get update && \
         curl \
         make \
         g++ \
-        libssl-dev
-RUN /data/go_env.sh && \
-        /data/libevent.sh && \
-        /data/protobuf.sh && \
-        mv /data/M_BerryMiner_ubuntu_v1_0 /root && \
-        echo $CODE > /root/M_BerryMiner_ubuntu_v1_0/server/conf/code.txt
+        libssl-dev \
+        wget
+COPY . /data
+WORKDIR /data
+RUN tar zxvf src.tar.gz
+RUN tar -C /usr/local -zxvf /data/src/go1.9.1.linux-amd64.tar.gz && \
+        mkdir -p /root/go/src && \
+        echo "export GOPATH=/root/go" >> ~/.bashrc && \
+        echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc source ~/.bashrc && \
+        cd src/ && \
+        unzip Libevent-release-2.1.8-stable.zip && \
+        cd Libevent-release-2.1.8-stable && \
+        ./autogen.sh && \
+        ./configure --prefix=/usr && \
+        make && make install && \
+        cd .. && \
+        unzip protobuf-master.zip && \
+        cd protobuf-master && \
+        ./autogen.sh && \
+        ./configure && \
+        make && make check && make install && \
+        ldconfig && \
+        cd .. && \
+        mv /data/src/M_BerryMiner_ubuntu_v1_0 /root && \
+        echo $CODE > /root/M_BerryMiner_ubuntu_v1_0/server/conf/code.txt && \
+        cd /root && rm -rf src/ && src.tar.gz
 CMD "/data/run.sh"
