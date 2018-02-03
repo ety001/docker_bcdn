@@ -34,5 +34,5 @@ RUN tar -C /usr/local -zxvf /data/src/go1.9.1.linux-amd64.tar.gz && \
         cd .. && \
         mv /data/src/M_BerryMiner_ubuntu_v1_0 /root && \
         echo $CODE > /root/M_BerryMiner_ubuntu_v1_0/server/conf/code.txt && \
-        cd /root && rm -rf src/ && src.tar.gz
+        cd /root && rm -rf src/ src.tar.gz
 CMD "/data/run.sh"
