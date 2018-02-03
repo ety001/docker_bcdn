@@ -29,4 +29,4 @@ RUN /data/go_env.sh && \
         protoc --version &&
         cd && cp -r /data/M_BerryMiner_ubuntu_v1_0 . && \
         echo $CODE > /root/M_BerryMiner_ubuntu_v1_0/server/conf/code.txt
-CMD "/root/M_BerryMiner_ubuntu_v1_0/server/bcdn"
+CMD "/data/run.sh"
