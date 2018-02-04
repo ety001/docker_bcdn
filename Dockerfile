@@ -23,16 +23,14 @@ RUN tar -C /usr/local -zxvf /data/src/go1.9.1.linux-amd64.tar.gz && \
         cd Libevent-release-2.1.8-stable && \
         ./autogen.sh && \
         ./configure --prefix=/usr && \
-        make && make install && \
-        cd .. && \
+        make && make install
+RUN cd src/ && \
         unzip protobuf-master.zip && \
         cd protobuf-master && \
         ./autogen.sh && \
         ./configure && \
         make && make check && make install && \
-        ldconfig && \
-        cd .. && \
-        mv /data/src/M_BerryMiner_ubuntu_v1_0 /root && \
-        echo $CODE > /root/M_BerryMiner_ubuntu_v1_0/server/conf/code.txt && \
+        ldconfig
+RUN mv /data/src/M_BerryMiner_ubuntu_v1_0 /root && \
         cd /root && rm -rf src/ src.tar.gz
 CMD "/data/run.sh"
