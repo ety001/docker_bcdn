@@ -18,7 +18,7 @@ RUN wget https://dl.google.com/go/go1.9.1.linux-amd64.tar.gz && \
         tar -C /usr/local -zxvf /data/go1.9.1.linux-amd64.tar.gz && \
         mkdir -p /root/go/src && \
         echo "export GOPATH=/root/go" >> ~/.bashrc && \
-        echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc source ~/.bashrc && \
+        echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc && \
         unzip Libevent-release-2.1.8-stable.zip && \
         cd Libevent-release-2.1.8-stable && \
         ./autogen.sh && \
@@ -32,6 +32,8 @@ RUN wget https://dl.google.com/go/go1.9.1.linux-amd64.tar.gz && \
         make && make check && make install && \
         ldconfig && \
         cd && \
-        rm -rf /data/*
+        rm -rf /data/* && \
+        apt-get -y autoremove && \
+        apt-get clean
 WORKDIR /root
 CMD "pwd"
