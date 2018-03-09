@@ -30,4 +30,8 @@ RUN wget https://dl.google.com/go/go1.9.1.linux-amd64.tar.gz && \
         ./autogen.sh && \
         ./configure && \
         make && make check && make install && \
-        ldconfig
+        ldconfig && \
+        cd && \
+        rm -rf /data/*
+WORKDIR /root
+CMD "pwd"
